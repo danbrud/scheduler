@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Schedule from './Schedule'
 
-class Name extends Component {
+class Landing extends Component {
 
     constructor() {
         super()
@@ -11,7 +11,9 @@ class Name extends Component {
         }
     }
 
-    updateMonth = e => this.setState({monthToDisplay: e.target.value})
+    displaySchedule = () => this.setState({displaySchedule: true})
+
+    updateMonth = e => this.setState({monthToDisplay: e.target.value, displaySchedule: false})
 
     displayMonthsDropdown = () => {
 
@@ -40,7 +42,7 @@ class Name extends Component {
                     <button id="manage-users">Manage Users</button>
                     <p>Choose Month</p>
                     {this.displayMonthsDropdown()}
-                    <button id="generate-schedule">Generate Schedule</button>
+                    <button id="generate-schedule" onClick={this.displaySchedule}>Generate Schedule</button>
                     {this.state.displaySchedule ? <Schedule reqMonth={this.state.monthToDisplay}/> : null}
                 </div>
             </div>
@@ -48,4 +50,4 @@ class Name extends Component {
     }
 }
 
-export default Name
+export default Landing

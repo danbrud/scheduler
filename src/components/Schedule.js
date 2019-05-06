@@ -11,7 +11,7 @@ class Schedule extends Component {
     }
 
     getSchedule = async () => {
-        let schedule = await axios.get('http://localhost:8000/schedule')
+        let schedule = await axios.get(`http://localhost:8000/schedule/${this.props.reqMonth}`)
         return schedule.data
     }
 

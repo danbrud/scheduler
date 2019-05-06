@@ -14,10 +14,10 @@ router.get('/users', function(req, res) {
     })
 })
 
-router.get('/schedule', function(req, res) {
+router.get('/schedule/:month', function(req, res) {
     //Awesome code here that calls a method to create a schedule
 
-    //res.send(schedule)
+    res.send(`schedule here for ${req.params.month}`)
 })
 
 router.post('/user', function(req, res) {
