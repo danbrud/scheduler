@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Schedule from './Schedule'
+import {Link} from 'react-router-dom'
 
 class Landing extends Component {
 
@@ -39,7 +40,7 @@ class Landing extends Component {
         return (
             <div id="landing-container">
                 <div id="buttons">
-                    <button id="manage-users">Manage Users</button>
+                    <Link to="/users"><button id="manage-users">Manage Users</button></Link>
                     <p>Choose Month</p>
                     {this.displayMonthsDropdown()}
                     <button id="generate-schedule" onClick={this.displaySchedule}>Generate Schedule</button>
