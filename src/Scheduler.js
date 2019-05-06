@@ -32,7 +32,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 19), shift: "afternoon"},
                     {date: new Date(2019, 5, 24), shift: "morning"}
                 ],
-                shiftsScheduled : []
+                shiftsScheduled : [2]
             },
             {
                 name: "Ravid",
@@ -59,7 +59,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 12), shift: "afternoon"},
                     {date: new Date(2019, 5, 19), shift: "morning"},
                 ],
-                shiftsScheduled : []
+                shiftsScheduled : [1, 5]
             },
             {
                 name: "Hunter",
@@ -87,14 +87,11 @@ class Scheduler {
                     {date: new Date(2019, 5, 24), shift: "morning"},
                     {date: new Date(2019, 5, 25), shift: "morning"}
                 ],
-                shiftsScheduled : []
+                shiftsScheduled : [0, 2, 5]
             }
-        ],
-        this.userShiftCounter = {}
-        this.populateUserCounter()
+        ]
     }
 
-    populateUserCounter = () => this.users.forEach(u => this.userShiftCounter[u.name] = 0)
 
     getDates() {
         const dates = []
@@ -112,35 +109,45 @@ class Scheduler {
         return dates
     }
 
-    scheduleUser(user, date, shift) {
-        scheduledDate.shifts[shift].push(user.name)
-        this.userShiftCounter[user.name] += 1
-        user.shiftsScheduled.push({ date: new Date(date), shift: shift} )
+    hasFreeSlots(shift, user, day){
+        return user.timesAvailable.some(t => t.date.valueOf() === day.date.valueOf() && t.shift === shift)
+        && day.shifts.morning.length < 2
     }
 
-    scheduleOneDay(day, userIndex) {
-        let scheduledDate = day
-        let returnIndex = this.users.length - userIndex
-        for (let i = 0; i < this.users.length; i ++) {
-            let user = this.users[i < returnIndex ? i + userIndex : i - returnIndex]    //start cycling through users at given userIndex
-            if (user.timesAvailable.some(t => new Date(t.date) === new Date(day.date) && t.shift === "morning")
-                && day.shifts.morning.length < 2) {
-                    scheduledDate.shifts.morning.push(user.name)
-                    this.userShiftCounter[user.name] += 1
+    scheduleUser(user, day, shift) {
+        day.shifts[shift].push(user.name)
+        user.shiftsScheduled.push({ date: new Date(day.date), shift: shift} )
+    }
+
+    sortByShiftsScheduled(a, b) {
+        return a.shiftsScheduled.length - b.shiftsScheduled.length
+    }
+
+    scheduleOneDay(day) {
+        const sortedUsers = [...this.users].sort(this.sortByShiftsScheduled)
+        for (let user of sortedUsers) {
+            if (this.hasFreeSlots("morning", user, day)) {
+                    this.scheduleUser(user, day, "morning")
                 }
-            else if (user.timesAvailable.some(t => new Date(t.date) === new Date(day.date) && t.shift === "afternoon")
-                && day.shifts.afternoon.length < 2) {
-                    scheduledDate.shifts.afternoon.push(user.name)
-                    this.userShiftCounter[user.name] += 1
+            else if (this.hasFreeSlots("afternoon", user, day)) {
+                    this.scheduleUser(user, day, "afternoon")
                 }
-            else { break }
+            else { 
+                break }
         }
     }
 
     createSchedule() {
         const schedule = this.getDates()
         for (let date of schedule) {
-
+            this.scheduleOneDay(date)
         }
+        return schedule
     }
 }
+
+const scheduler = new Scheduler()
+
+scheduler.createSchedule().forEach(s => {
+    console.log(s.date)
+    console.log(s.shifts)})
