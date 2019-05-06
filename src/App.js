@@ -33,9 +33,8 @@ class App extends Component {
           <div id="header">
             <span>Manager</span>
           </div>
-          <Landing />
-
-
+          
+          <Route exact path="/" render={() => <Landing />} />
           <Route exact path="/users" render={() => <Users users={this.state.users} />} />
         </div>
       </Router>
