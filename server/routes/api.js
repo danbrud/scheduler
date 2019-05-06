@@ -14,6 +14,12 @@ router.get('/users', function(req, res) {
     })
 })
 
+router.get('/schedule', function(req, res) {
+    //Awesome code here that calls a method to create a schedule
+
+    //res.send(schedule)
+})
+
 router.post('/user', function(req, res) {
     const reqUser = req.body
 
