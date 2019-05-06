@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
-mongoose.connect("mongodb://localhost/bankDB", { useNewUrlParser: true })
+mongoose.connect("mongodb://localhost/scheduleDB", { useNewUrlParser: true })
 
 const app = express()
 const api = require('./server/routes/api')
