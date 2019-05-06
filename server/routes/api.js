@@ -18,7 +18,10 @@ router.post('/user', function(req, res) {
     const reqUser = req.body
 
     const newUser = new User({
-        
+        name: reqUser.name,
+        contact: reqUser.contact,
+        timesAvailable: reqUser.timesAvailable,
+        shiftsScheduled: reqUser.shiftsScheduled
     })
 
     let save = newUser.save()
