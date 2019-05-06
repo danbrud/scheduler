@@ -1,13 +1,31 @@
 const express = require('express')
-const request = require('request')
 const router = express.Router()
 const mongoose = require('mongoose')
+const User = require('../model/User')
 
 
 router.get('/sanity', function (req, res) {
     res.send('OK!')
 })
 
+router.get('/users', function(req, res) {
+    User.find({}, function(err, users) {
+        res.send(users)
+    })
+})
+
+router.post('/user', function(req, res) {
+    const reqUser = req.body
+
+    const newUser = new User({
+        
+    })
+
+    let save = newUser.save()
+    save.then(function(user) {
+        res.send('User has been saved')
+    })
+})
 
 
 
