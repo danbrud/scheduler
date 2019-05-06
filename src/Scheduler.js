@@ -15,7 +15,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 17), shift: "afternoon"},
                     {date: new Date(2019, 5, 19), shift: "morning"},
                     {date: new Date(2019, 5, 24), shift: "afternoon"},
-                    {date: new Date(2019, 5, 25), shift: "afternoon"}
+                    {date: new Date(2019, 5, 26), shift: "afternoon"}
                 ],
                 shiftsScheduled : []
             },
@@ -32,7 +32,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 19), shift: "afternoon"},
                     {date: new Date(2019, 5, 24), shift: "morning"}
                 ],
-                shiftsScheduled : [2]
+                shiftsScheduled : []
             },
             {
                 name: "Ravid",
@@ -45,7 +45,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 17), shift: "afternoon"},
                     {date: new Date(2019, 5, 19), shift: "morning"},
                     {date: new Date(2019, 5, 24), shift: "morning"},
-                    {date: new Date(2019, 5, 25), shift: "morning"}
+                    {date: new Date(2019, 5, 26), shift: "morning"}
                 ],
                 shiftsScheduled : []
             },
@@ -59,7 +59,7 @@ class Scheduler {
                     {date: new Date(2019, 5, 12), shift: "afternoon"},
                     {date: new Date(2019, 5, 19), shift: "morning"},
                 ],
-                shiftsScheduled : [1, 5]
+                shiftsScheduled : []
             },
             {
                 name: "Hunter",
@@ -85,9 +85,9 @@ class Scheduler {
                     {date: new Date(2019, 5, 12), shift: "morning"},
                     {date: new Date(2019, 5, 19), shift: "morning"},
                     {date: new Date(2019, 5, 24), shift: "morning"},
-                    {date: new Date(2019, 5, 25), shift: "morning"}
+                    {date: new Date(2019, 5, 26), shift: "morning"}
                 ],
-                shiftsScheduled : [0, 2, 5]
+                shiftsScheduled : []
             }
         ]
     }
@@ -111,7 +111,7 @@ class Scheduler {
 
     hasFreeSlots(shift, user, day){
         return user.timesAvailable.some(t => t.date.valueOf() === day.date.valueOf() && t.shift === shift)
-        && day.shifts.morning.length < 2
+        && day.shifts[shift].length < 2
     }
 
     scheduleUser(user, day, shift) {
@@ -123,6 +123,10 @@ class Scheduler {
         return a.shiftsScheduled.length - b.shiftsScheduled.length
     }
 
+    // checkDate(day, date) {
+    //     return day.date.valueOf() === new Date(2019, 5, date).valueOf()
+    // }
+
     scheduleOneDay(day) {
         const sortedUsers = [...this.users].sort(this.sortByShiftsScheduled)
         for (let user of sortedUsers) {
@@ -132,8 +136,7 @@ class Scheduler {
             else if (this.hasFreeSlots("afternoon", user, day)) {
                     this.scheduleUser(user, day, "afternoon")
                 }
-            else { 
-                break }
+            else { continue }
         }
     }
 
