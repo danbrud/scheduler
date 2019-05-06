@@ -96,10 +96,34 @@ class Scheduler {
         const dates = []
         let currentDate = new Date(this.year, this.month, 1)
         let endDate = new Date(this.year, this.month + 1, 1)
+        const millisecondDay = 24*3600*1000
         while (currentDate < endDate) {
             for (let day of this.days) {
-                
+                if (currentDate.getDay() === day) {
+                    dates.push({ date: new Date(currentDate), shifts: { morning: [], afternoon: [] } })
+                }
             }
+            currentDate = new Date(currentDate.getTime() + millisecondDay)      //increment by one day
+        }
+        return dates
+    }
+
+    scheduleOneDay(day) {
+        let scheduledDate
+        for (let user of this.users) {
+            if (user.some(u => u.date === day.date) && day.shifts.morning.length < 2) {
+                day.shifts.morning.push(u.name)
+            }
+            else if (user.some(u => u.date === day.date) && day.shifts.morning.length < 2) {
+                day.shifts.morning.push(u.name)
+            }
+        }
+    }
+
+    createSchedule() {
+        const schedule = this.getDates()
+        for (let date of schedule) {
+
         }
     }
 }
