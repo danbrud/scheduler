@@ -89,8 +89,12 @@ class Scheduler {
                 ],
                 shiftsScheduled : []
             }
-        ]
+        ],
+        this.userShiftCounter = {}
+        this.populateUserCounter()
     }
+
+    populateUserCounter = () => this.users.forEach(u => this.userShiftCounter[u.name] = 0)
 
     getDates() {
         const dates = []
@@ -108,15 +112,28 @@ class Scheduler {
         return dates
     }
 
-    scheduleOneDay(day) {
-        let scheduledDate
-        for (let user of this.users) {
-            if (user.some(u => u.date === day.date) && day.shifts.morning.length < 2) {
-                day.shifts.morning.push(u.name)
-            }
-            else if (user.some(u => u.date === day.date) && day.shifts.morning.length < 2) {
-                day.shifts.morning.push(u.name)
-            }
+    scheduleUser(user, date, shift) {
+        scheduledDate.shifts[shift].push(user.name)
+        this.userShiftCounter[user.name] += 1
+        user.shiftsScheduled.push({ date: new Date(date), shift: shift} )
+    }
+
+    scheduleOneDay(day, userIndex) {
+        let scheduledDate = day
+        let returnIndex = this.users.length - userIndex
+        for (let i = 0; i < this.users.length; i ++) {
+            let user = this.users[i < returnIndex ? i + userIndex : i - returnIndex]    //start cycling through users at given userIndex
+            if (user.timesAvailable.some(t => new Date(t.date) === new Date(day.date) && t.shift === "morning")
+                && day.shifts.morning.length < 2) {
+                    scheduledDate.shifts.morning.push(user.name)
+                    this.userShiftCounter[user.name] += 1
+                }
+            else if (user.timesAvailable.some(t => new Date(t.date) === new Date(day.date) && t.shift === "afternoon")
+                && day.shifts.afternoon.length < 2) {
+                    scheduledDate.shifts.afternoon.push(user.name)
+                    this.userShiftCounter[user.name] += 1
+                }
+            else { break }
         }
     }
 
