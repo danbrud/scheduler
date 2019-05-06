@@ -1,26 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react'
 import logo from './logo.svg';
 import './App.css';
+import Landing from './components/Landing'
+import Users from './components/Users'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import axios from 'axios'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      users: []
+    }
+  }
+
+  getUsers = async () => {
+    let users = await axios.get('http://localhost:8000/users')
+    return users.data
+  }
+
+  componentDidMount = async () => {
+    let users = await this.getUsers()
+    this.setState({ users })
+  }
+
+  render() {
+    return (
+      <Router >
+        <div className="App">
+          <div id="header">
+            <span>Manager</span>
+          </div>
+          
+          <Route exact path="/" render={() => <Landing />} />
+          <Route exact path="/users" render={() => <Users users={this.state.users} />} />
+        </div>
+      </Router>
+    )
+  }
 }
 
 export default App;
