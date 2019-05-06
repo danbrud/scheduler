@@ -3,6 +3,7 @@ class Scheduler {
         this.year = 2019
         this.month = 5      //June (will be variable from class input in future versions)
         this.days = [1, 3]  //Monday and Wednesday (will also be variable in the future)
+        this.usersPerDay = 2    //number of workers to asign to a given day (can be variable)
         this.users = [      //will also receive variable array from App
             {
                 name: "Paul",
@@ -109,34 +110,73 @@ class Scheduler {
         return dates
     }
 
-    hasFreeSlots(shift, user, day){
+    hasFreeSlots(shift, user, day) {
         return user.timesAvailable.some(t => t.date.valueOf() === day.date.valueOf() && t.shift === shift)
-        && day.shifts[shift].length < 2
+        && day.shifts[shift].length < this.usersPerDay
     }
 
-    scheduleUser(user, day, shift) {
+    isAlreadyScheduled(shift, user, day) {
+        return user.shiftsScheduled.some(s => s.date.valueOf() === day.date.valueOf() && s.shift === shift)
+    }
+
+    scheduleUser(shift, user, day) {
         day.shifts[shift].push(user.name)
         user.shiftsScheduled.push({ date: new Date(day.date), shift: shift} )
+    }
+
+    scheduleUsers(shift, day) {
+        for (let user of this.users) {
+            if (this.isAlreadyScheduled(shift, user, day)) { continue }
+            else if (this.hasFreeSlots(shift, user, day)) {
+                this.scheduleUser(shift, user, day)
+            }
+        }
     }
 
     sortByShiftsScheduled(a, b) {
         return a.shiftsScheduled.length - b.shiftsScheduled.length
     }
 
-    // checkDate(day, date) {
-    //     return day.date.valueOf() === new Date(2019, 5, date).valueOf()
-    // }
+    getRandomizedUsers() {
+        const users = [...this.users]
+        const randomUsers = []
+        while (users.length > 0) {
+            let randomIndex = Math.ceil(Math.random() * users.length) - 1
+            randomUsers.push(users.splice(randomIndex, 1)[0])
+        }
+        return randomUsers
+    }
 
     scheduleOneDay(day) {
-        const sortedUsers = [...this.users].sort(this.sortByShiftsScheduled)
+        const sortedUsers = this.getRandomizedUsers().sort(this.sortByShiftsScheduled)  //sort users according to how many shifts they already have assigned, randomizing the order of those with the same number of shifts
         for (let user of sortedUsers) {
             if (this.hasFreeSlots("morning", user, day)) {
-                    this.scheduleUser(user, day, "morning")
+                    this.scheduleUser("morning", user, day)
                 }
             else if (this.hasFreeSlots("afternoon", user, day)) {
-                    this.scheduleUser(user, day, "afternoon")
+                    this.scheduleUser("afternoon", user, day)
                 }
             else { continue }
+        }
+    }
+
+    isShiftFilled(day, shift) {
+        return day.shifts[shift].length === this.usersPerDay
+    }
+
+    fillInGaps(schedule) {
+        for (let date of schedule) {
+            if (this.isShiftFilled(date, "morning") && this.isShiftFilled(date, "afternoon")) { continue }
+            else if (this.isShiftFilled(date, "morning")) {
+                this.scheduleUsers("afternoon", date)
+            }
+            else if (this.isShiftFilled(date, "afternoon")) {
+                this.scheduleUsers("morning", date)
+            }
+            else {
+                this.scheduleUsers("morning", date)
+                this.scheduleUsers("afternoon", date)
+            }
         }
     }
 
@@ -145,6 +185,7 @@ class Scheduler {
         for (let date of schedule) {
             this.scheduleOneDay(date)
         }
+        this.fillInGaps(schedule)
         return schedule
     }
 }
@@ -152,5 +193,5 @@ class Scheduler {
 const scheduler = new Scheduler()
 
 scheduler.createSchedule().forEach(s => {
-    console.log(s.date)
+    console.log(s.date.toDateString())
     console.log(s.shifts)})
