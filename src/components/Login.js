@@ -15,8 +15,8 @@ class Login extends Component {
     handleInput = e => this.setState({ username: e.target.value })
 
     generateRoute = () => {
-        let username = this.state.username
-        let user = this.props.users.find(u => u.contact === username)
+        let username = this.state.username.toLowerCase()
+        let user = this.props.users.find(u => u.contact.toLowerCase() === username)
         let route = ""
 
         if (username === "manager") {

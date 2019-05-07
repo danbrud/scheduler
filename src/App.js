@@ -8,6 +8,7 @@ import Users from './components/Users'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import axios from 'axios'
 import Calender from './components/Calender';
+import User from './components/User';
 
 
 class App extends Component {
@@ -30,16 +31,20 @@ class App extends Component {
   }
 
   render() {
+
+    let users = this.state.users
+
     return (
       <Router >
         <div className="App">
-          <div id="header">
+          {/* <div id="header">
             <span>Manager</span>
-          </div>
+          </div> */}
           
-          <Route exact path="/" render={() => <Login users={this.state.users}/>} />
+          <Route exact path="/" render={() => <Login users={users}/>} />
           <Route exact path="/manager" render={() => <Manager />} />
-          <Route exact path="/users" render={() => <Users users={this.state.users} />} />
+          <Route exact path="/user/:name" render={(match) => <User  match={match} users={users}/>} />
+          <Route exact path="/users" render={() => <Users users={users} />} />
         </div>
       </Router>
     )
