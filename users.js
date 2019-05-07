@@ -1,23 +1,3 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
-const userSchema = new Schema({
-    name: String,
-    contact: String,
-    timesAvailable: [{
-        date: Date,
-        shift: String
-    }],
-    shiftsScheduled: [{
-        date: Date,
-        shift: String
-    }]
-})
-
-const User = mongoose.model('User', userSchema)
-
-module.exports = User
-
 const users = [
     {
         name: "Paul",
@@ -105,12 +85,3 @@ const users = [
         shiftsScheduled : []
     }
 ]
-
-const postUsers = function(users) {
-    users.forEach(u => {
-        let user = new User(u)
-        user.save()
-    })
-}
-
-// postUsers(users)

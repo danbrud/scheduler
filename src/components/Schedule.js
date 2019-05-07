@@ -10,12 +10,22 @@ class Schedule extends Component {
         }
     }
 
-   
+
+    getSchedule = async () => {
+        let schedule = await axios.get(`http://localhost:8000/schedule/${this.props.reqMonth}/${this.props.reqYear}`)
+        return schedule.data
+    }
+
+    componentDidMount = async () => {
+        let schedule = await this.getSchedule()
+        this.setState({ schedule })
+    }
     
     
     render() {
         return(
             <div id="schedule">
+                {console.log(this.state.schedule)}
                 {this.state.schedule}
             </div>        
         )
