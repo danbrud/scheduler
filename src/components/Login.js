@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import Manager from './Manager'
+import '../style/Login.css'
 
 class Login extends Component {
 
@@ -12,8 +13,8 @@ class Login extends Component {
         }
     }
 
-    handleInput = e =>  {
-        this.setState({ username: e.target.value }, function() {
+    handleInput = e => {
+        this.setState({ username: e.target.value }, function () {
             this.generateRoute()
         })
     }
@@ -28,7 +29,7 @@ class Login extends Component {
         } else if (user) {
             route = `/user/${user.name}`
         } else {
-             route = ""
+            route = ""
         }
 
         this.setState({ route })
@@ -37,9 +38,9 @@ class Login extends Component {
     render() {
 
         return (
-            <div>
-                <input type="text" value={this.state.username} onChange={this.handleInput} />
-                {this.state.route.length ? <Link id="login" to={this.state.route}>Login</Link> : <span>Please enter your username...</span>}
+            <div id="login-container">
+                <input class="login" placeholder="Username" type="text" value={this.state.username} onChange={this.handleInput} />
+                {this.state.route.length ? <span class="login" id="login-button"><Link to={this.state.route}>LOGIN</Link></span> : <span id="login-text">Please enter your username...</span>}
             </div>
         )
     }
