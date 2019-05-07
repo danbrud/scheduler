@@ -6,23 +6,13 @@ class User extends Component {
     constructor() {
         super()
         this.state = {
-            users: [],
             updateBasic: false,
             updateAvailable: false,
             viewSchedule: false,
-            currentUser: this.setUser()
+            currentUser: {},
+            updatedName: "",
+            updatedEmail: ""
         }
-    }
-
-    getUsers = async () => {
-        let users = await axios.get('http://localhost:8000/users')
-        return users.data
-    }
-    componentDidMount = async () => {
-        let users = await this.getUsers()
-        await this.setState({ users }, function() {
-            this.setUser()
-        })
     }
 
     updateBasicInfo = user => {
@@ -46,19 +36,19 @@ class User extends Component {
         this.setState({ [statusToChange]: !this.state[statusToChange]})
     }
 
-    setUser = (id = "5cd139d33035c14030717ea7") => {
-        const user = this.state.users.find(u => u._id === id)
+    setUser = () => {
+        const user = this.props.users.find(u => u._id == this.props.match.params.id)
         return user
-        // const user = this.props.users.find(u => u._id === id)
+    }
+
+    componentDidMount = () => {
+        let user = this.setUser()
         this.setState({
             currentUser: user
         })
     }
 
-
     render(){
-        // this.setUser(this.match.params.id)
-        // this.setUser()
         const user = this.state.currentUser
         return (<div>
             <button className="basic-button" name="updateBasic" onClick={this.changeUpdateStatus}>Update Details</button>
