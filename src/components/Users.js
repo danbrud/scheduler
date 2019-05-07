@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 class Users extends Component {
 
@@ -58,7 +59,7 @@ class Users extends Component {
                 MY USERS:
                 {users.map(u => <div>
                     <span>{u.name} - {u.contact}</span>
-                    <button>Manage Data</button>
+                    <Link to={`/user/${u._id}`}><button>Manage Data</button></Link>
                 </div>)}
 
                 <button onClick={this.toggleAddingUser}>ADD USER</button>

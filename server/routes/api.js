@@ -41,7 +41,7 @@ router.get('/schedule/:month/:year', async function (req, res) {
 
     const schedule = new Scheduler(year, month, daysToSchedule, usersPerShift, users)
     const generatedSchedule = schedule.createSchedule()
-    users.forEach(u => updateUserArray("shiftsScheduled", u._id, schedule.sendUserSchedule()))
+    // users.forEach(u => updateUserArray("shiftsScheduled", u._id, schedule.sendUserSchedule()))
 
     res.send(generatedSchedule)
 })
