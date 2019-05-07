@@ -4,15 +4,16 @@ const mongoose = require('mongoose')
 const User = require('../model/User')
 const Scheduler = require('../Scheduler')
 
-const getUsers = async () => await User.find({})
+const getUsers = async () => User.find({})
 
 
 router.get('/sanity', function (req, res) {
     res.send('OK!')
 })
 
-router.get('/users', async function (req, res) {
-    let reqUsers = await this.getUsers()
+
+router.get('/users', function (req, res) {
+    let reqUsers = getUsers()
     reqUsers.exec(function (err, users) {
         res.send(users)
     })
