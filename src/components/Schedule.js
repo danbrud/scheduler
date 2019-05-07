@@ -25,7 +25,7 @@ class Schedule extends Component {
         return(
             <div id="schedule">
                 {console.log(this.state.schedule)}
-                {this.state.schedule}
+                {/* {this.state.schedule} */}
             </div>        
         )
     }
