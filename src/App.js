@@ -5,6 +5,7 @@ import Landing from './components/Landing'
 import Users from './components/Users'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import axios from 'axios'
+import Calender from './components/Calender';
 
 
 class App extends Component {
@@ -28,16 +29,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router >
-        <div className="App">
-          <div id="header">
-            <span>Manager</span>
-          </div>
-          
-          <Route exact path="/" render={() => <Landing />} />
-          <Route exact path="/users" render={() => <Users users={this.state.users} />} />
-        </div>
-      </Router>
+      <Calender month="5" year="2019"/>
     )
   }
 }
