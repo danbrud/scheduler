@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Schedule from './Schedule'
 import {Link} from 'react-router-dom'
+import Calender from './Calender';
 
 class Landing extends Component {
 
