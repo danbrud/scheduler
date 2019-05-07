@@ -12,11 +12,9 @@ router.get('/sanity', function (req, res) {
 })
 
 
-router.get('/users', function (req, res) {
-    let reqUsers = getUsers()
-    reqUsers.exec(function (err, users) {
-        res.send(users)
-    })
+router.get('/users', async function (req, res) {
+    let users = await getUsers()
+    res.send(users)
 })
 
 router.get('/schedule/:month/:year', async function (req, res) {
