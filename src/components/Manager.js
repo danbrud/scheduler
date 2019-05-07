@@ -3,7 +3,7 @@ import Schedule from './Schedule'
 import {Link} from 'react-router-dom'
 import Calender from './Calender';
 
-class Landing extends Component {
+class Manager extends Component {
 
     constructor() {
         super()
@@ -72,4 +72,4 @@ class Landing extends Component {
     }
 }
 
-export default Landing
+export default Manager
