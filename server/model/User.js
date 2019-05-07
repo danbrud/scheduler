@@ -21,7 +21,7 @@ module.exports = User
 const users = [
     {
         name: "Paul",
-        contact: "email",
+        contact: "paul",
         timesAvailable : [
             {date: new Date(2019, 5, 3), shift: "morning"},
             {date: new Date(2019, 5, 5), shift: "morning"},
@@ -36,7 +36,7 @@ const users = [
     },
     {
         name: "Danny",
-        contact: "email",
+        contact: "danny",
         timesAvailable : [
             {date: new Date(2019, 5, 3), shift: "morning"},
             {date: new Date(2019, 5, 3), shift: "afternoon"},
@@ -51,7 +51,7 @@ const users = [
     },
     {
         name: "Ravid",
-        contact: "email",
+        contact: "ravid",
         timesAvailable : [
             {date: new Date(2019, 5, 3), shift: "afternoon"},
             {date: new Date(2019, 5, 5), shift: "morning"},
@@ -66,7 +66,7 @@ const users = [
     },
     {
         name: "Yossi",
-        contact: "email",
+        contact: "yossi",
         timesAvailable : [
             {date: new Date(2019, 5, 5), shift: "morning"},
             {date: new Date(2019, 5, 5), shift: "afternoon"},
@@ -78,7 +78,7 @@ const users = [
     },
     {
         name: "Hunter",
-        contact: "email",
+        contact: "hunter",
         timesAvailable : [
             {date: new Date(2019, 5, 3), shift: "morning"},
             {date: new Date(2019, 5, 5), shift: "morning"},
@@ -92,7 +92,7 @@ const users = [
     },
     {
         name: "Shiran",
-        contact: "email",
+        contact: "shiran",
         timesAvailable : [
             {date: new Date(2019, 5, 3), shift: "morning"},
             {date: new Date(2019, 5, 5), shift: "morning"},

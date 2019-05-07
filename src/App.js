@@ -43,7 +43,8 @@ class App extends Component {
           
           <Route exact path="/" render={() => <Login users={users}/>} />
           <Route exact path="/manager" render={() => <Manager users={users}/>} />
-          <Route exact path="/user/:id" render={(match) => <User  match={match} users={users}/>} />
+          <Route exact path="/user/:id" render={({match}) => <User  match={match} users={users}/>} />
+
           <Route exact path="/users" render={() => <Users users={users} getUsers={this.getUsers}/>} />
         </div>
       </Router>

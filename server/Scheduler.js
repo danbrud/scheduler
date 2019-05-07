@@ -102,6 +102,11 @@ class Scheduler {
         this.fillInGaps(schedule)
         return schedule
     }
+
+    sendUserSchedule(userId) {
+        const user = this.users.find(u => u._id === userId)
+        return user.shiftsScheduled
+    }
 }
 
 module.exports = Scheduler

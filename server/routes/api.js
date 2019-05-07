@@ -6,6 +6,14 @@ const Scheduler = require('../Scheduler')
 
 const getUsers = async () => User.find({})
 
+const updateUserArray = async (arrayName, id, dateArray) => {
+    const userId = id
+    const dates = dateArray
+    const user = await User.findOne({_id: userId})
+    user[arrayName] = [...dates]
+    user.save()
+}
+
 
 router.get('/sanity', function (req, res) {
     res.send('OK!')
@@ -33,6 +41,7 @@ router.get('/schedule/:month/:year', async function (req, res) {
 
     const schedule = new Scheduler(year, month, daysToSchedule, usersPerShift, users)
     const generatedSchedule = schedule.createSchedule()
+    users.forEach(u => updateUserArray("shiftsScheduled", u._id, schedule.sendUserSchedule()))
 
     res.send(generatedSchedule)
 })
@@ -53,22 +62,21 @@ router.post('/user', function (req, res) {
     })
 })
 
-router.put('/user/available/:name', async function (req, res) {
-    const userName = req.params.name
+router.put('/user/available/:id', async function (req, res) {
+    const userId = req.params.id
     const timesAvailable = req.body
-    const user = await User.findOne({name: userName})
-    user.timesAvailable = [...timesAvailable]
-    user.save()
-    res.send(`${userName}'s available times have been updated`)
+    updateUserArray("timesAvailable", userId, timesAvailable)
+    res.send(`${user.name}'s available times have been updated`)
 })
 
-router.put('/user/scheduled/:name', async function (req, res) {
-    const userName = req.params.name
-    const shiftsScheduled = req.body
-    const user = await User.findOne({name: userName})
-    user.shiftsScheduled = [...shiftsScheduled]
+router.put('/user/basic/:id', async function (req, res) {
+    const userId = req.params.id
+    const userData = req.body
+    user = User.findOne({_id: userId})
+    user.name = userData.name
+    user.contact = userData.contact
     user.save()
-    res.send(`${userName}'s available times have been updated`)
+    res.send(`${user.name}'s basic data has been updated`)
 })
 
 
