@@ -28,7 +28,7 @@ class User extends Component {
     }
 
     showUserSchedule = user => {
-        return (<div className="view-schedule">Pretty user schedule for {user.name}</div>)
+        return (<div className="view-schedule">{user.shiftsScheduled.map(s => <div>{s.date} : {s.shift}</div>)}</div>)
     }
 
     changeUpdateStatus = event => {

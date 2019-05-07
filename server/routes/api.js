@@ -9,9 +9,10 @@ const getUsers = async () => User.find({})
 const updateUserArray = async (arrayName, id, dateArray) => {
     const userId = id
     const dates = dateArray
-    const user = await User.findOne({_id: userId})
-    user[arrayName] = [...dates]
-    user.save()
+    await User.findByIdAndUpdate(userId, {[arrayName]: dates})
+    // user[arrayName].splice(0)
+    // user[arrayName] = [...dates]
+    // user.save()
 }
 
 
