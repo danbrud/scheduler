@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Day from './Day';
 import axios from 'axios'
+import '../style/Calender.css'
+
 
 
 class Calender extends Component {
@@ -69,17 +71,38 @@ class Calender extends Component {
         })
     }
 
+    getMonthName = (month) => {
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"]
+
+        const d = new Date(2019,month,1);
+        return monthNames[d.getMonth()];
+    }
 
     render() {
         console.log(this.state.schedule)
-        return (<div className="month">
-            {this.state.matrix.map(week => week.map((day, i) => <Day
-                key={i}
-                date={new Date(day)}
-                schedule={this.state.schedule}
-            />
-            ))}
-        </div>
+        return (
+            <div>
+                <div className="title">{this.getMonthName(this.state.month)},  {this.state.year}</div>
+                <div className="weekDays">
+                    <div>Sunday</div>
+                    <div>Monday</div>
+                    <div>Tuesday</div>
+                    <div>Wednesday</div>
+                    <div>Thursday</div>
+                    <div>Friday</div>
+                    <div>Saturday</div>
+                </div>
+                <div className="month">
+                    {this.state.matrix.map(week => week.map((day, i) => <Day
+                        key={i}
+                        date={new Date(day)}
+                        schedule={this.state.schedule}
+                        users={this.props.users}
+                    />
+                    ))}
+                </div>
+            </div>
         );
     }
 

@@ -1,0 +1,42 @@
+#login-container {
+    height: 100vh;
+    background-color: #bdc3c7;
+    display: grid;
+    align-content: center;
+    grid-template-columns: 1fr 1fr;
+}
+
+#login-container > input {
+    width: 60%;
+    justify-self: end;
+    margin-right: 10px;
+    text-align: center;
+}
+
+#login-container > #login-text {
+    justify-self: start;
+    margin-left: 10px;
+    font-size: 20px;
+    align-self: center;
+}
+
+#login-container > #login-button {
+    text-decoration: none;
+    color: white;
+    justify-self: start;
+    align-self: center;
+    background-color: #27ae60;
+    width: 100px;
+    border-radius: 10px;
+}
+#login-container > #login-button > a {
+    display: grid;
+    align-self: center;
+    text-decoration: none;
+    color: white;
+}
+
+.login {
+    display: grid;
+    height: 50px;
+}
