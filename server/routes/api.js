@@ -2,25 +2,37 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = require('../model/User')
+const Scheduler = require('../Scheduler')
+
+const getUsers = () => User.find({})
 
 
 router.get('/sanity', function (req, res) {
     res.send('OK!')
 })
 
-router.get('/users', function(req, res) {
-    User.find({}, function(err, users) {
+router.get('/users', function (req, res) {
+    let reqUsers = this.getUsers()
+    reqUsers.exec(function (err, users) {
         res.send(users)
     })
 })
 
-router.get('/schedule/:month', function(req, res) {
-    //Awesome code here that calls a method to create a schedule
+router.get('/schedule/:month/:year', function (req, res) {
 
-    res.send(`schedule here for ${req.params.month}`)
+    let year = this.params.year
+    let month = req.params.month
+    let daysToSchedule = [1 ,3]
+    let usersPerShift = 2
+    let users = this.getUsers()
+
+    const schedule = new Scheduler(year, month, daysToSchedule, usersPerShift, users)
+    const generatedSchedule = schedule.createSchedule()
+
+    res.send(generatedSchedule)
 })
 
-router.post('/user', function(req, res) {
+router.post('/user', function (req, res) {
     const reqUser = req.body
 
     const newUser = new User({
@@ -31,7 +43,7 @@ router.post('/user', function(req, res) {
     })
 
     let save = newUser.save()
-    save.then(function(user) {
+    save.then(function (user) {
         res.send('User has been saved')
     })
 })
