@@ -10,6 +10,7 @@ class Schedule extends Component {
         }
     }
 
+
     getSchedule = async () => {
         let schedule = await axios.get(`http://localhost:8000/schedule/${this.props.reqMonth}/${this.props.reqYear}`)
         return schedule.data
@@ -25,7 +26,7 @@ class Schedule extends Component {
         return(
             <div id="schedule">
                 {console.log(this.state.schedule)}
-                {/* {this.state.schedule} */}
+                
             </div>        
         )
     }
