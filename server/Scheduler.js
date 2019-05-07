@@ -192,6 +192,11 @@ class Scheduler {
 
 const scheduler = new Scheduler()
 
-scheduler.createSchedule().forEach(s => {
+const newScchedule = scheduler.createSchedule()
+// console.log(newScchedule)
+
+newScchedule.forEach(s => {
     console.log(s.date.toDateString())
     console.log(s.shifts)})
+
+// scheduler.users.forEach(u => console.log(u.shiftsScheduled))
