@@ -47,6 +47,10 @@ class Scheduler {
         }
     }
 
+    clearPreviousShifts () {
+        this.users.forEach(u => u.shiftsScheduled.splice(0))
+    }
+
     sortByShiftsScheduled(a, b) {
         return a.shiftsScheduled.length - b.shiftsScheduled.length
     }
@@ -96,6 +100,7 @@ class Scheduler {
 
     createSchedule() {
         const schedule = this.getDates()
+        this.clearPreviousShifts()
         for (let date of schedule) {
             this.scheduleOneDay(date)
         }
