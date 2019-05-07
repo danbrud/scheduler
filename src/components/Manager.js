@@ -60,6 +60,7 @@ class Manager extends Component {
 
     render() {
         return (
+
             <div id="landing-container">
                 <div id="buttons">
                     <Link to="/users"><button id="manage-users">Manage Users</button></Link>

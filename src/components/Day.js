@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import '../style/Day.css'
+import { Link } from 'react-router-dom'
 
 
 class Day extends Component {
@@ -16,22 +18,24 @@ class Day extends Component {
         return []
     }
 
+    findUserIDByName =(name) => {return this.props.users.find(user => user.name == name)._id}
+
 
     render() {
         return (
             <div className="day">
                 {this.props.date.toString() !== "Invalid Date" ?
-                    <div>
-                        <div>
+                    <div className="cell">
+                        <div className="dateNumber">
                             {this.props.date.getDate().toString()}
                         </div>
                         <div>
-                            <div className="morning">Morning:</div>
-                            {this.getShifts("morning").map(user => <span>{user}</span>)}
+                            <div className="shift">Morning:</div>
+                            <div className="users">{this.getShifts("morning").map(user => <span><Link to={`user/${this.findUserIDByName(user)}`}>{user}</Link></span>)}</div>
                         </div>
                         <div>
-                            <div className="afternoon">Afternoon:</div>
-                            {this.getShifts("afternoon").map(user => <span>{user}</span>)}
+                            <div className="shift">Afternoon:</div>
+                            <div className="users">{this.getShifts("afternoon").map(user => <span><Link to={`user/${this.findUserIDByName(user)}`}>{user}</Link></span>)}</div>
                         </div>
                     </div> :
                     null
