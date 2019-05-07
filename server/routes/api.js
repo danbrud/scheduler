@@ -17,6 +17,12 @@ router.get('/users', async function (req, res) {
     res.send(users)
 })
 
+router.get('/user/:name', async function (req, res) {
+    const userName = req.params.name
+    let user = await User.findOne({name: userName})
+    res.send(user)
+})
+
 router.get('/schedule/:month/:year', async function (req, res) {
 
     let year = req.params.year
@@ -36,9 +42,7 @@ router.post('/user', function (req, res) {
 
     const newUser = new User({
         name: reqUser.name,
-        contact: reqUser.contact,
-        timesAvailable: reqUser.timesAvailable,
-        shiftsScheduled: reqUser.shiftsScheduled
+        contact: reqUser.contact
     })
 
     let save = newUser.save()
@@ -47,6 +51,23 @@ router.post('/user', function (req, res) {
     })
 })
 
+router.put('/user/available/:name', async function (req, res) {
+    const userName = req.params.name
+    const timesAvailable = req.body
+    const user = await User.findOne({name: userName})
+    user.timesAvailable = [...timesAvailable]
+    user.save()
+    res.send(`${userName}'s available times have been updated`)
+})
+
+router.put('/user/scheduled/:name', async function (req, res) {
+    const userName = req.params.name
+    const shiftsScheduled = req.body
+    const user = await User.findOne({name: userName})
+    user.shiftsScheduled = [...shiftsScheduled]
+    user.save()
+    res.send(`${userName}'s available times have been updated`)
+})
 
 
 module.exports = router
