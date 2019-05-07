@@ -30,7 +30,7 @@ class Calender extends Component {
 
 
     generateMonth = matrix => {
-        let first = new Date(this.state.year,this.state.month,1)
+        let first = new Date(this.state.year, this.state.month, 1)
         for (let i in matrix[0]) {
             if (i == first.getDay()) {
                 matrix[0][i] = first
@@ -40,12 +40,15 @@ class Calender extends Component {
             }
         }
         let day = 2
-        
+
         for (let r = 0; r < 6; r++) {
             for (let c = 0; c < 7; c++) {
-                if (matrix[r][c] == "." &&  new Date(this.state.year,this.state.month,day) > first) {
-                    matrix[r][c] = new Date(this.state.year,this.state.month,day)
+                if (matrix[r][c] == "." && new Date(this.state.year, this.state.month, day).getMonth() == this.state.month) {
+                    matrix[r][c] = new Date(this.state.year, this.state.month, day)
                     day++
+                }
+                else if (matrix[r][c] == ".") {
+                    matrix[r][c] = "X"
                 }
             }
         }
@@ -61,22 +64,25 @@ class Calender extends Component {
 
     componentDidMount = async () => {
         let schedule = await this.getSchedule()
-        this.setState({ schedule , month: this.props.reqMonth, year: this.props.reqYear}, function () {
+        this.setState({ schedule, month: this.props.reqMonth, year: this.props.reqYear }, function () {
             this.generateCalender()
         })
     }
 
+
     render() {
         console.log(this.state.schedule)
-        let i =0
         return (<div className="month">
-            {this.state.matrix.map(week => week.map(day => <Day date={day}/>))}
+            {this.state.matrix.map(week => week.map((day, i) => <Day
+                key={i}
+                date={new Date(day)}
+                schedule={this.state.schedule}
+            />
+            ))}
         </div>
         );
     }
 
 }
-
-
 
 export default Calender;
