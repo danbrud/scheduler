@@ -27,7 +27,7 @@ class Login extends Component {
         if (username === "manager") {
             route = `/manager`
         } else if (user) {
-            route = `/user/${user.name}`
+            route = `/user/${user._id}`
         } else {
             route = ""
         }
