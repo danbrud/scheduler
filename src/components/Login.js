@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Manager from './Manager'
 
 class Login extends Component {
@@ -12,7 +12,11 @@ class Login extends Component {
         }
     }
 
-    handleInput = e => this.setState({ username: e.target.value })
+    handleInput = e =>  {
+        this.setState({ username: e.target.value }, function() {
+            this.generateRoute()
+        })
+    }
 
     generateRoute = () => {
         let username = this.state.username.toLowerCase()
@@ -21,10 +25,10 @@ class Login extends Component {
 
         if (username === "manager") {
             route = `/manager`
-        } else if (!user) {
-            alert("Username does not exist. Please try again")
-        } else {
+        } else if (user) {
             route = `/user/${user.name}`
+        } else {
+             route = ""
         }
 
         this.setState({ route })
@@ -32,12 +36,10 @@ class Login extends Component {
 
     render() {
 
-        if(this.state.route.length) { return <Redirect to={this.state.route} /> }
-
         return (
             <div>
                 <input type="text" value={this.state.username} onChange={this.handleInput} />
-                <button id="login" onClick={this.generateRoute}>Login</button>
+                {this.state.route.length ? <Link id="login" to={this.state.route}>Login</Link> : <span>Please enter your username...</span>}
             </div>
         )
     }
