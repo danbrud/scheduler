@@ -24,7 +24,7 @@ class Login extends Component {
         } else if (!user) {
             alert("Username does not exist. Please try again")
         } else {
-            route = `/user/${user.name}`
+            route = `/user/${user._id}`
         }
 
         this.setState({ route })
