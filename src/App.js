@@ -29,7 +29,16 @@ class App extends Component {
 
   render() {
     return (
-      <Calender month="5" year="2019"/>
+      <Router >
+        <div className="App">
+          <div id="header">
+            <span>Manager</span>
+          </div>
+          
+          <Route exact path="/" render={() => <Landing />} />
+          <Route exact path="/users" render={() => <Users users={this.state.users} />} />
+        </div>
+      </Router>
     )
   }
 }

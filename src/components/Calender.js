@@ -7,12 +7,10 @@ class Calender extends Component {
     constructor() {
         super()
         this.state = {
-            month: 6,
-            year: 2019,
+            month: -1,
+            year: -1,
             matrix: [],
             schedule: []
-            // month: parseInt(this.props.month),
-            // year: parseInt(this.props.year)
         }
     }
 
@@ -62,9 +60,10 @@ class Calender extends Component {
     }
 
     componentDidMount = async () => {
-        this.generateCalender()
         let schedule = await this.getSchedule()
-        this.setState({ schedule })
+        this.setState({ schedule , month: this.props.reqMonth, year: this.props.reqYear}, function () {
+            this.generateCalender()
+        })
     }
 
     render() {

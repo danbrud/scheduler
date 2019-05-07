@@ -65,7 +65,7 @@ class Landing extends Component {
                     <Link to="/users"><button id="manage-users">Manage Users</button></Link>
                     <p><span>Choose Month {this.displayMonthsDropdown()}</span>  <span>Choose Year {this.displayYearsDropdown()}</span></p>
                     <button id="generate-schedule" onClick={this.displaySchedule}>Generate Schedule</button>
-                    {this.state.displaySchedule ? <Calendar reqMonth={this.state.monthToDisplay} reqYear={this.state.yearToDisplay}/> : null}
+                    {this.state.displaySchedule ? <Calender reqMonth={this.state.monthToDisplay} reqYear={this.state.yearToDisplay}/> : null}
                 </div>
             </div>
         )
