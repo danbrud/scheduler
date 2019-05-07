@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const User = require('../model/User')
 const Scheduler = require('../Scheduler')
 
-const getUsers = () => User.find({})
+const getUsers = async () => User.find({})
 
 
 router.get('/sanity', function (req, res) {
@@ -12,19 +12,19 @@ router.get('/sanity', function (req, res) {
 })
 
 router.get('/users', function (req, res) {
-    let reqUsers = this.getUsers()
+    let reqUsers = getUsers()
     reqUsers.exec(function (err, users) {
         res.send(users)
     })
 })
 
-router.get('/schedule/:month/:year', function (req, res) {
+router.get('/schedule/:month/:year', async function (req, res) {
 
-    let year = this.params.year
+    let year = req.params.year
     let month = req.params.month
     let daysToSchedule = [1 ,3]
     let usersPerShift = 2
-    let users = this.getUsers()
+    let users = await getUsers()
 
     const schedule = new Scheduler(year, month, daysToSchedule, usersPerShift, users)
     const generatedSchedule = schedule.createSchedule()
