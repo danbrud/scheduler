@@ -11,6 +11,7 @@ router.get('/sanity', function (req, res) {
     res.send('OK!')
 })
 
+
 router.get('/users', function (req, res) {
     let reqUsers = getUsers()
     reqUsers.exec(function (err, users) {
