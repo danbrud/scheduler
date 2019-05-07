@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Schedule from './Schedule'
 import {Link} from 'react-router-dom'
+import Calender from './Calender';
 
 class Landing extends Component {
 
@@ -44,7 +45,7 @@ class Landing extends Component {
                     <p>Choose Month</p>
                     {this.displayMonthsDropdown()}
                     <button id="generate-schedule" onClick={this.displaySchedule}>Generate Schedule</button>
-                    {this.state.displaySchedule ? <Schedule reqMonth={this.state.monthToDisplay}/> : null}
+                    {this.state.displaySchedule ? <Calender reqMonth={this.state.monthToDisplay}/> : null}
                 </div>
             </div>
         )
