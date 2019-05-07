@@ -104,7 +104,7 @@ class Scheduler {
     }
 }
 
-export default Scheduler
+module.exports = Scheduler
 
 const scheduler = new Scheduler()
 
