@@ -30,8 +30,8 @@ class Users extends Component {
 
     sendUserToDB = async () => {
         let newUser = {name: this.state.name, contact: this.state.email}
-        let test = await axios.post('/user', newUser)
-        console.log(test)
+        await axios.post('http://localhost:8000/user', newUser)
+        
         this.updateUsers()
         this.toggleAddingUser()
         this.clearInputs()
