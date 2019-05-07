@@ -1,7 +1,7 @@
 class Scheduler {
     constructor(year, month, daysToSchedule, usersPerShift, users) {
-        this.year = year
-        this.month = month
+        this.year = parseInt(year)
+        this.month = parseInt(month)
         this.days = daysToSchedule  //in a week
         this.usersPerShift = usersPerShift    //number of workers to asign to a given day
         this.users = users
@@ -106,13 +106,13 @@ class Scheduler {
 
 module.exports = Scheduler
 
-const scheduler = new Scheduler()
+// const scheduler = new Scheduler()
 
-const newScchedule = scheduler.createSchedule()
+// const newScchedule = scheduler.createSchedule()
 // console.log(newScchedule)
 
-newScchedule.forEach(s => {
-    console.log(s.date.toDateString())
-    console.log(s.shifts)})
+// newScchedule.forEach(s => {
+//     console.log(s.date.toDateString())
+//     console.log(s.shifts)})
 
 // scheduler.users.forEach(u => console.log(u.shiftsScheduled))
