@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import Manager from './Manager'
 
 class Login extends Component {
 
@@ -7,24 +8,36 @@ class Login extends Component {
         super()
         this.state = {
             username: "",
+            route: ""
         }
     }
 
     handleInput = e => this.setState({ username: e.target.value })
 
-    redirect = () => {
+    generateRoute = () => {
         let username = this.state.username
-        username === "manager" ? <Redirect to='manager'></Redirect> : null
-
         let user = this.props.users.find(u => u.contact === username)
-        !user ? alert("Username does not exist. Please try again") : <Redirect to={`/user/${user.name}`}></Redirect>
+        let route = ""
+
+        if (username === "manager") {
+            route = `/manager`
+        } else if (!user) {
+            alert("Username does not exist. Please try again")
+        } else {
+            route = `/user/${user.name}`
+        }
+
+        this.setState({ route })
     }
 
     render() {
+
+        if(this.state.route.length) { return <Redirect to={this.state.route} /> }
+
         return (
             <div>
                 <input type="text" value={this.state.username} onChange={this.handleInput} />
-                <button id="login" onClick={this.redirect}></button>
+                <button id="login" onClick={this.generateRoute}>Login</button>
             </div>
         )
     }
